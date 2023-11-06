@@ -1,4 +1,4 @@
-# arialogs_forwarding
+
 Aria Logs content packs with queries that can be used to forward events to other destinations. 
 
 These content packs each contain four queries that can be used in an Aria Logs forwarding rule to forward vCenter and ESX audit and authentication events to a 3rd party log aggregator like Splunk.
@@ -7,23 +7,23 @@ The queries only use regex and static fields to pull the relevant events, so the
 
 Events that are pulled for forwarding:<br>
 
-vCenter Audit Events:<br>
+<b>vCenter Audit Events:</b><br>
   User created or deleted<br>
   User permissions changed<br>
   VM reconfigured<br>
   VM created or deleted<br>
-  VM console opened (ticket aquired)<br>
+  VM console opened (ticket acquired)<br>
           
-vCenter Authentication Events:<br>
+<b>vCenter Authentication Events:</b><br>
   Failed login attempt<br>
-  Sucessful login attempt<br>
+  Successful login attempt<br>
 
-ESX Audit Events:<br>
+<b>ESX Audit Events:</b><br>
   Host changes (services start/stopped, host firewall change, changes to ESX image software, etc...)<br>
-  Shell commands run by logged in user<br>
+  Shell commands run by logged-in user<br>
   ESX user created/deleted<br>
 
-ESX Authentication Events:<br>
+<b>ESX Authentication Events:</b><br>
   Failed SSH login attempt<br>
   Successful SSH login attempt<br>
   Successful web client login/logout attempt<br>
@@ -36,4 +36,4 @@ Import the content pack for the version of Aria Logs you are using (SaaS or on-p
 
 IMPORTANT - Some of these queries use regex, which is very CPU-costly for Aria Logs to process, but it was the only way I could grab as much info as possible in one query. If you have a larger environment and try to run a regex heavy query in log explorer (Like the ESX authentication one), it might take a long time to return any results, if it does at all. The smaller the time window the easier it is for the system to process the query. If you are trying to see what the results of one of these queries is before you hit apply to start forwarding, and nothing comes up after a while, I recommend you just click 'Save' and make sure the events are flowing into your 3rd party logging system.
 
-These queries come with zero support and might or might not work in your environment, but they have been tested to work in a lab. This is not VMware branded or supported code, so if it causes issues in your environment, neither I or VMware are responsible. It is recommended you test these queries in a test environment first to make sure they collect the logs you are looking to forward, and they dont slow down your Aria Logs instances noticeably.
+These queries come with zero support and might or might not work in your environment, but they have been tested to work in a lab. This is not VMware branded or supported code, so if it causes issues in your environment, neither I or VMware are responsible. It is recommended you test these queries in a test environment first to make sure they collect the logs you are looking to forward, and they don't slow down your Aria Logs instances noticeably.
