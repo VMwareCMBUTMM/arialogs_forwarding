@@ -1,0 +1,40 @@
+{
+  "name":"Aria Logs On-prem Audit/Authentication Forwarder Queries",
+  "namespace":"com.vmware.forwarderqueries",
+  "contentPackId":"com.vmware.forwarderqueries",
+  "framework":"#9c4",
+  "version":"2.4",
+  "extractedFields":[ ],
+  "queries":[ {
+    "name":"Forwarder Rule - vCenter Authentications",
+    "chartQuery":"{\"query\":\"\",\"startTimeMillis\":1698951062629,\"endTimeMillis\":1699037462908,\"piqlFunctionGroups\":[{\"functions\":[{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false}],\"field\":null}],\"dateFilterPreset\":\"CUSTOM\",\"shouldGroupByTime\":true,\"includeAllContentPackFields\":true,\"eventSortOrder\":\"DESC\",\"summarySortOrder\":\"DESC\",\"compareQueryOrderBy\":\"TREND\",\"compareQuerySortOrder\":\"DESC\",\"compareQueryOptions\":null,\"messageViewType\":\"EVENTS\",\"constraintToggle\":\"ALL\",\"piqlFunction\":{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false},\"piqlFunctionField\":null,\"fieldConstraints\":[{\"internalName\":\"appname\",\"operator\":\"CONTAINS\",\"value\":\"vcenter-server\"},{\"internalName\":\"hostname\",\"operator\":\"EXISTS\"},{\"internalName\":\"vc_event_type\",\"operator\":\"CONTAINS\",\"value\":\"com.vmware.vim25.UserLoginSessionEvent,com.vmware.vim25.UserLogoutSessionEvent\"},{\"internalName\":\"text\",\"operator\":\"DOES_NOT_CONTAIN\",\"value\":\"127.0.0.1\"}],\"supplementalConstraints\":[],\"groupByFields\":[],\"contentPacksToIncludeFields\":[],\"extractedFields\":[]}",
+    "messageQuery":null,
+    "info":"<span>Use this query to forward vCenter authentication actions.</span>",
+    "options":"{\"chartTypeName\":null,\"chartOptions\":\"{\\\"logaxis\\\":false,\\\"trendline\\\":false,\\\"spline\\\":false}\"}"
+  }, {
+    "name":"Forwarder Rule - ESX Audit Events",
+    "chartQuery":"{\"query\":\"\",\"startTimeMillis\":1698951393309,\"endTimeMillis\":1699037793376,\"piqlFunctionGroups\":[{\"functions\":[{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false}],\"field\":null}],\"dateFilterPreset\":\"CUSTOM\",\"shouldGroupByTime\":true,\"includeAllContentPackFields\":true,\"eventSortOrder\":\"DESC\",\"summarySortOrder\":\"DESC\",\"compareQueryOrderBy\":\"TREND\",\"compareQuerySortOrder\":\"DESC\",\"compareQueryOptions\":null,\"messageViewType\":\"EVENTS\",\"constraintToggle\":\"ALL\",\"piqlFunction\":{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false},\"piqlFunctionField\":null,\"fieldConstraints\":[{\"internalName\":\"appname\",\"operator\":\"MATCH\",\"value\":\"^.*vobd*.?|^.*shell*.?|^.*hostd.?\"},{\"internalName\":\"text\",\"operator\":\"MATCH\",\"value\":\"^.*correlator*.?|^.*shell*.?|^.*account*.?\"}],\"supplementalConstraints\":[],\"groupByFields\":[],\"contentPacksToIncludeFields\":[],\"extractedFields\":[]}",
+    "messageQuery":null,
+    "info":"<span>Use this query to forward ESX auditing events.</span>",
+    "options":"{\"chartTypeName\":null,\"chartOptions\":\"{\\\"logaxis\\\":false,\\\"trendline\\\":false,\\\"spline\\\":false}\"}"
+  }, {
+    "name":"Forwarder Rule - ESX - Authentication and shell commands",
+    "chartQuery":"{\"query\":\"\",\"startTimeMillis\":1698951489252,\"endTimeMillis\":1699037889363,\"piqlFunctionGroups\":[{\"functions\":[{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false}],\"field\":null}],\"dateFilterPreset\":\"CUSTOM\",\"shouldGroupByTime\":true,\"includeAllContentPackFields\":true,\"eventSortOrder\":\"DESC\",\"summarySortOrder\":\"DESC\",\"compareQueryOrderBy\":\"TREND\",\"compareQuerySortOrder\":\"DESC\",\"compareQueryOptions\":null,\"messageViewType\":\"EVENTS\",\"constraintToggle\":\"ALL\",\"piqlFunction\":{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false},\"piqlFunctionField\":null,\"fieldConstraints\":[{\"internalName\":\"appname\",\"operator\":\"MATCH\",\"value\":\"^.*sshd*.?|^.*hostd.?\"},{\"internalName\":\"text\",\"operator\":\"MATCH\",\"value\":\"^.*pam_unix*.?|^.*User.*logged*.?\"}],\"supplementalConstraints\":[],\"groupByFields\":[],\"contentPacksToIncludeFields\":[],\"extractedFields\":[]}",
+    "messageQuery":null,
+    "info":"<span>ESX authentication events and shell commands run.</span>",
+    "options":"{\"chartTypeName\":null,\"chartOptions\":\"{\\\"logaxis\\\":false,\\\"trendline\\\":false,\\\"spline\\\":false}\"}"
+  }, {
+    "name":"Forwarder Rule - vCenter Audit Events",
+    "chartQuery":"{\"query\":\"\",\"startTimeMillis\":1698951289668,\"endTimeMillis\":1699037689667,\"piqlFunctionGroups\":[{\"functions\":[{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false}],\"field\":null}],\"dateFilterPreset\":\"CUSTOM\",\"shouldGroupByTime\":true,\"includeAllContentPackFields\":true,\"eventSortOrder\":\"DESC\",\"summarySortOrder\":\"DESC\",\"compareQueryOrderBy\":\"TREND\",\"compareQuerySortOrder\":\"DESC\",\"compareQueryOptions\":null,\"messageViewType\":\"EVENTS\",\"constraintToggle\":\"ANY\",\"piqlFunction\":{\"label\":\"Count\",\"value\":\"COUNT\",\"requiresField\":false,\"numericOnly\":false},\"piqlFunctionField\":null,\"fieldConstraints\":[{\"internalName\":\"text\",\"operator\":\"CONTAINS\",\"value\":\"vim.event.VmReconfiguredEvent\"},{\"internalName\":\"vc_event_type\",\"operator\":\"CONTAINS\",\"value\":\"com.vmware.vim25.PermissionRemovedEvent,com.vmware.vim25.PermissionAddedEvent,com.vmware.vim25.VmRemovedEvent,com.vmware.vim25.VmCreatedEvent,com.vmware.sso.PrincipalManagement\"},{\"internalName\":\"text\",\"operator\":\"MATCH\",\"value\":\"^.*a ticket for*.?\"}],\"supplementalConstraints\":[],\"groupByFields\":[],\"contentPacksToIncludeFields\":[],\"extractedFields\":[]}",
+    "messageQuery":null,
+    "info":"<span>Use this query to forward vCenter audit events including virtual machine deleted, created, modified, or permissions changed.</span>",
+    "options":"{\"chartTypeName\":null,\"chartOptions\":\"{\\\"logaxis\\\":false,\\\"trendline\\\":false,\\\"spline\\\":false}\"}"
+  } ],
+  "alerts":[ ],
+  "dashboardSections":[ ],
+  "aliasFields":[ ],
+  "aliasRules":[ ],
+  "author":"",
+  "url":"",
+  "contentVersion":"1.0"
+}
