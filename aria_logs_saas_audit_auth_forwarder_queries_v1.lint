@@ -1,0 +1,397 @@
+{
+  "manifest": {
+    "documentDescription": null,
+    "documentVersion": 0,
+    "documentEpoch": null,
+    "documentKind": null,
+    "documentSelfLink": null,
+    "documentUpdateTimeMicros": 0,
+    "documentUpdateAction": null,
+    "documentExpirationTimeMicros": 0,
+    "documentOwner": null,
+    "documentSourceLink": null,
+    "documentAuthPrincipalLink": null,
+    "documentTransactionId": null,
+    "id": null,
+    "info": null,
+    "instructions": null,
+    "upgradeInstructions": null,
+    "name": "Aria Logs SaaS Audit/Auth Forwarder Queries",
+    "author": null,
+    "namespace": "com.vmware.forwardingqueries",
+    "contentVersion": "1",
+    "url": null,
+    "iconData": null,
+    "createdAt": null,
+    "createdBy": null,
+    "lastUpdatedAt": null,
+    "lastUpdatedBy": null,
+    "links": null,
+    "enabled": null,
+    "isGlobal": null,
+    "hidden": null,
+    "category": null,
+    "cicdVersion": null,
+    "actionable": null,
+    "tenantLinks": null,
+    "cspOrgId": null,
+    "action": null
+  },
+  "queries": [
+    {
+      "name": "Forwarder Rule - vCenter Audit Events",
+      "id": "com.vmware.forwardingqueries.forwarder_rulevcenter_audit_events",
+      "source": "USER_DEFINED",
+      "sourceName": null,
+      "contentPackId": null,
+      "description": "Use this query to forward vCenter audit events including virtual machine deleted, created, modified, or permissions changed.",
+      "url": null,
+      "constraints": {
+        "operator": "OR",
+        "fieldName": null,
+        "value": null,
+        "constraints": [
+          {
+            "operator": "CONTAINS",
+            "fieldName": "text",
+            "value": "vim.event.VmReconfiguredEvent",
+            "constraints": [],
+            "tags": []
+          },
+          {
+            "operator": "OR",
+            "fieldName": null,
+            "value": null,
+            "constraints": [
+              {
+                "operator": "CONTAINS",
+                "fieldName": "vc_event_type",
+                "value": "com.vmware.vim25.PermissionRemovedEvent",
+                "constraints": [],
+                "tags": []
+              },
+              {
+                "operator": "CONTAINS",
+                "fieldName": "vc_event_type",
+                "value": "com.vmware.vim25.PermissionAddedEvent",
+                "constraints": [],
+                "tags": []
+              },
+              {
+                "operator": "CONTAINS",
+                "fieldName": "vc_event_type",
+                "value": "com.vmware.vim25.VmRemovedEvent",
+                "constraints": [],
+                "tags": []
+              },
+              {
+                "operator": "CONTAINS",
+                "fieldName": "vc_event_type",
+                "value": "com.vmware.vim25.VmCreatedEvent",
+                "constraints": [],
+                "tags": []
+              },
+              {
+                "operator": "CONTAINS",
+                "fieldName": "vc_event_type",
+                "value": "com.vmware.sso.PrincipalManagement",
+                "constraints": [],
+                "tags": []
+              }
+            ],
+            "tags": []
+          },
+          {
+            "operator": "MATCH",
+            "fieldName": "text",
+            "value": "^.*a ticket for*.?",
+            "constraints": [],
+            "tags": []
+          }
+        ],
+        "tags": []
+      },
+      "aggregationFunctions": [
+        {
+          "fieldName": null,
+          "functionName": "COUNT"
+        }
+      ],
+      "groupByTerms": [
+        {
+          "fieldName": "timestamp",
+          "groupByType": "FIXED_BUCKET"
+        }
+      ],
+      "fieldListItems": null,
+      "isSearchable": false,
+      "isAnnotation": false,
+      "tenantLinks": [
+        "/core/tenants/6017e767c12d3c75"
+      ],
+      "createdBy": null,
+      "createdAt": null,
+      "lastUpdatedBy": null,
+      "lastUpdatedAt": null,
+      "widget": {
+        "name": null,
+        "widgetType": null,
+        "analysisFunctions": null,
+        "visualization": {
+          "type": "AREA",
+          "options": {}
+        },
+        "filter": null
+      },
+      "alertSolrQuery": "SELECT COUNT(*) as \"count\" FROM logs WHERE (text='vim.event.VmReconfiguredEvent' OR (vc_event_type='com.vmware.vim25.PermissionRemovedEvent' OR vc_event_type='com.vmware.vim25.PermissionAddedEvent' OR vc_event_type='com.vmware.vim25.VmRemovedEvent' OR vc_event_type='com.vmware.vim25.VmCreatedEvent' OR vc_event_type='com.vmware.sso.PrincipalManagement') OR text=matchesRegex('^.*a ticket for*.?'))",
+      "isFavorite": false,
+      "entityTagAssociation": null
+    },
+    {
+      "name": "Forwarder Rule - ESX - Authentication Events",
+      "id": "com.vmware.forwardingqueries.forwarder_ruleesxauthentication_events",
+      "source": "USER_DEFINED",
+      "sourceName": null,
+      "contentPackId": null,
+      "description": "ESX authentication events and shell commands run.",
+      "url": null,
+      "constraints": {
+        "operator": "AND",
+        "fieldName": null,
+        "value": null,
+        "constraints": [
+          {
+            "operator": "MATCH",
+            "fieldName": "appname",
+            "value": "^.*sshd*.?|^.*hostd.?",
+            "constraints": [],
+            "tags": []
+          },
+          {
+            "operator": "MATCH",
+            "fieldName": "text",
+            "value": "^.*pam_unix*.?|^.*User.*logged*.?",
+            "constraints": [],
+            "tags": []
+          }
+        ],
+        "tags": []
+      },
+      "aggregationFunctions": [
+        {
+          "fieldName": null,
+          "functionName": "COUNT"
+        }
+      ],
+      "groupByTerms": [
+        {
+          "fieldName": "timestamp",
+          "groupByType": "FIXED_BUCKET"
+        }
+      ],
+      "fieldListItems": null,
+      "isSearchable": false,
+      "isAnnotation": false,
+      "tenantLinks": [
+        "/core/tenants/6017e767c12d3c75"
+      ],
+      "createdBy": null,
+      "createdAt": null,
+      "lastUpdatedBy": null,
+      "lastUpdatedAt": null,
+      "widget": {
+        "name": null,
+        "widgetType": null,
+        "analysisFunctions": null,
+        "visualization": {
+          "type": "AREA",
+          "options": {}
+        },
+        "filter": null
+      },
+      "alertSolrQuery": "SELECT COUNT(*) as \"count\" FROM logs WHERE (appname=matchesRegex('^.*sshd*.?|^.*hostd.?') AND text=matchesRegex('^.*pam_unix*.?|^.*User.*logged*.?'))",
+      "isFavorite": false,
+      "entityTagAssociation": null
+    },
+    {
+      "name": "Forwarder Rule - vCenter Authentications",
+      "id": "com.vmware.forwardingqueries.forwarder_rulevcenter_authentications",
+      "source": "USER_DEFINED",
+      "sourceName": null,
+      "contentPackId": null,
+      "description": "Use this query to forward vCenter authentication actions.",
+      "url": null,
+      "constraints": {
+        "operator": "AND",
+        "fieldName": null,
+        "value": null,
+        "constraints": [
+          {
+            "operator": "CONTAINS",
+            "fieldName": "appname",
+            "value": "vcenter-server",
+            "constraints": [],
+            "tags": []
+          },
+          {
+            "operator": "EXISTS",
+            "fieldName": "hostname",
+            "value": null,
+            "constraints": [],
+            "tags": []
+          },
+          {
+            "operator": "OR",
+            "fieldName": null,
+            "value": null,
+            "constraints": [
+              {
+                "operator": "CONTAINS",
+                "fieldName": "vc_event_type",
+                "value": "com.vmware.vim25.UserLoginSessionEvent",
+                "constraints": [],
+                "tags": []
+              },
+              {
+                "operator": "CONTAINS",
+                "fieldName": "vc_event_type",
+                "value": "com.vmware.vim25.UserLogoutSessionEvent",
+                "constraints": [],
+                "tags": []
+              }
+            ],
+            "tags": []
+          },
+          {
+            "operator": "DOES_NOT_CONTAIN",
+            "fieldName": "text",
+            "value": "127.0.0.1",
+            "constraints": [],
+            "tags": []
+          }
+        ],
+        "tags": []
+      },
+      "aggregationFunctions": [
+        {
+          "fieldName": null,
+          "functionName": "COUNT"
+        }
+      ],
+      "groupByTerms": [
+        {
+          "fieldName": "hostname",
+          "groupByType": "EACH_VALUE"
+        }
+      ],
+      "fieldListItems": null,
+      "isSearchable": false,
+      "isAnnotation": false,
+      "tenantLinks": [
+        "/core/tenants/6017e767c12d3c75"
+      ],
+      "createdBy": null,
+      "createdAt": null,
+      "lastUpdatedBy": null,
+      "lastUpdatedAt": null,
+      "widget": {
+        "name": null,
+        "widgetType": null,
+        "analysisFunctions": null,
+        "visualization": {
+          "type": "COLUMN",
+          "options": {}
+        },
+        "filter": null
+      },
+      "alertSolrQuery": "SELECT COUNT(*) as \"count\", hostname FROM logs WHERE (appname='vcenter-server' AND hostname=exist() AND (vc_event_type='com.vmware.vim25.UserLoginSessionEvent' OR vc_event_type='com.vmware.vim25.UserLogoutSessionEvent') AND text<>'127.0.0.1') GROUP BY hostname",
+      "isFavorite": false,
+      "entityTagAssociation": null
+    },
+    {
+      "name": "Forwarder Rule - ESX Audit Events",
+      "id": "com.vmware.forwardingqueries.forwarder_ruleesx_audit_events",
+      "source": "USER_DEFINED",
+      "sourceName": null,
+      "contentPackId": null,
+      "description": "Use this query to forward ESX auditing events.",
+      "url": null,
+      "constraints": {
+        "operator": "AND",
+        "fieldName": null,
+        "value": null,
+        "constraints": [
+          {
+            "operator": "MATCH",
+            "fieldName": "appname",
+            "value": "^.*vobd*.?|^.*shell*.?|^.*hostd.?",
+            "constraints": [],
+            "tags": []
+          },
+          {
+            "operator": "MATCH",
+            "fieldName": "text",
+            "value": "^.*correlator*.?|^.*shell*.?|^.*account*.?",
+            "constraints": [],
+            "tags": []
+          }
+        ],
+        "tags": []
+      },
+      "aggregationFunctions": [
+        {
+          "fieldName": null,
+          "functionName": "COUNT"
+        }
+      ],
+      "groupByTerms": [
+        {
+          "fieldName": "timestamp",
+          "groupByType": "FIXED_BUCKET"
+        }
+      ],
+      "fieldListItems": null,
+      "isSearchable": false,
+      "isAnnotation": false,
+      "tenantLinks": [
+        "/core/tenants/6017e767c12d3c75"
+      ],
+      "createdBy": null,
+      "createdAt": null,
+      "lastUpdatedBy": null,
+      "lastUpdatedAt": null,
+      "widget": {
+        "name": null,
+        "widgetType": null,
+        "analysisFunctions": null,
+        "visualization": {
+          "type": "AREA",
+          "options": {}
+        },
+        "filter": null
+      },
+      "alertSolrQuery": "SELECT COUNT(*) as \"count\" FROM logs WHERE (appname=matchesRegex('^.*vobd*.?|^.*shell*.?|^.*hostd.?') AND text=matchesRegex('^.*correlator*.?|^.*shell*.?|^.*account*.?'))",
+      "isFavorite": false,
+      "entityTagAssociation": null
+    }
+  ],
+  "extractedFields": [],
+  "alerts": [],
+  "dashboards": [],
+  "agentGroups": [],
+  "queryDefinitionIds": [
+    "0e943e7e-c727-47ac-9e06-8efa3aee7006",
+    "c07785e1-f6c8-476c-ac75-e2d12ee8830a",
+    "07246cbb-469a-4841-bcb8-56edf7238b92",
+    "615bb316-e86c-4d8a-b501-58c3b11e0af3"
+  ],
+  "extractedFieldIds": [],
+  "alertDefinitionIds": [],
+  "dashboardDefinitionIds": [],
+  "agentGroupIds": [],
+  "contentPackId": null,
+  "tenantLinks": [
+    "/core/tenants/6017e767c12d3c75"
+  ],
+  "selectAllQueryDefinitions": false
+}
